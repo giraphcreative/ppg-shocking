@@ -2,37 +2,45 @@
 
 $(function(){
 
-	$(".rate").keyup(function(){
-		var new_rate = parseFloat( $(this).val().replace(/[^\d.]/ig, '') ) - 1;
-		$(".rate_compare").val( ( new_rate < 1.99 ? 1.99 : new_rate ) );
-	});
+	// the calculate function
+	var calculate = function(){
+		var amount = parseFloat( $('.amount').val().replace(/[^\d.]/ig, '') );
 
-	$(".calculator").accrue({
-		mode: "compare",
-		response_output_div: ".result-amount",
-        response_compare: "%savings%",
-		operation: "button",
-		error_text: "$0",
-		callback: function( elem, data ){
-			if ( data.loan_1 === 0 ) {
-				// they didn't enter one of the fields
-			} else {
+		var loan_info_first_six = $.loanInfo({
+			amount: amount,
+			rate: '1.99',
+			term: '180'
+		});
 
-				// close the tool, show the results
-				$(".tool").slideUp( "slow" );
-				$(".results").slideDown( "slow" );
-				
-				// send savings amount to analytics as a goal completion
-				ga('send', 'event', 'button', 'click', 'calculate', Math.ceil( data.loan_2.total_payments - data.loan_2.total_interest ) );
+		var amount_remaining = amount - ( parseFloat( loan_info_first_six.payment_amount_formatted ) * 6 );
 
-				// scroll to the top of the results div on calculate
-				$("body, html").animate({ 
-					scrollTop: $( ".tool" ).offset().top 
-				}, 1000);
+		$( '.payment-six' ).html( loan_info_first_six.payment_amount_formatted );
 
-			}
+		var loan_info_remainder = $.loanInfo({
+			amount: amount_remaining,
+			rate: '3.5',
+			term: '174'
+		});
+
+		$( '.payment-remaining' ).html( loan_info_remainder.payment_amount_formatted );
+
+		$(".results").slideDown( "slow" );
+		$(".tool").slideUp( "slow" );
+	};
+
+
+	// calculate on button click
+	$( '.calculate' ).click( calculate );	
+
+
+	// calculate on enter press
+	$( '.amount' ).keypress(function( event ) {
+		if ( event.which == 13 ) {
+			event.preventDefault();
+			calculate();
 		}
 	});
+
 
 	// reverse the show/hide if they click the back button
 	$(".go-back").click(function(){

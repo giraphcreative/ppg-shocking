@@ -24,30 +24,38 @@ $navy: #2D2E74;
 // background-container
 .container {
 	background: white;
-
-	@include respond-to( 1220px ) {
-	}
 }
 
 
 // header styles
 header {
 	position: relative;
-	background: url(../img/bg-header.jpg) bottom center no-repeat;
+	background: url(../img/bg-header-small.jpg) bottom left no-repeat;
 	background-size: cover;
+	text-align: center;
+	padding: 30px 0 0;
 
-	.wrap {		
-		padding: 40px 0;
+	@include respond-to( 1024px ) {
+		background: url(../img/bg-header.jpg) bottom center no-repeat;
+		text-align: left;
 
-		@include respond-to( 768px ) {
-			padding: 140px 0 120px;
+		.wrap {		
+			padding: 100px 0 0 60px;
 		}
-	}
 
-	.car {
-		position: absolute;
-		right: 0;
-		bottom: 20px;
+		&:before {
+			content: " ";
+			position: absolute;
+			top: 0;
+			left: 50%;
+			margin-left: -60%;
+			width: 120%;
+			height: 70px;
+			background: url(../img/bg-caution-tape.jpg) center center repeat-x;
+			-ms-transform: rotate( -3deg );
+			-webkit-transform: rotate( -3deg );
+			transform: rotate( -3deg );
+		}
 	}
 }
 
@@ -81,6 +89,8 @@ header {
 	}
 
 	h1 {
+		padding: 20px;
+
 		@include respond-to( 768px ) {
 			font-size: 32px;
 			line-height: 42px;
@@ -88,13 +98,13 @@ header {
 	}
 
 	.calculator {
-		background: $navy;
+		background: black;
 		color: white;
 		padding: 20px 15px 0;
 		margin: 30px 0;
 		@include font;
 
-		button, input[type=submit], .btn {
+		button, input[type=submit], input[type=image], .btn {
 			width: 100%;
 			margin: 0 auto;
 		}
@@ -151,6 +161,16 @@ header {
 		}
 	}
 
+	h5 {
+		@include font;
+		font-size: 1.2em;
+
+		@include respond-to( 768px ) {
+			font-size: 1.7em;
+			padding: 10px 20px;
+		}
+	}
+
 	p {
 		@include font;
 		font-size: 1.5em;
@@ -165,56 +185,48 @@ header {
 	.button-apply {
 		margin-top: 20px;
 	}
+
+	.go-back {
+		color: $grey;
+	}
 }
 
 
 
-// footer styles
-.footer-bar {
-	border-top: 10px solid $grey;
-	color: $grey;
-	padding: 10px 20px;
-	text-align: center;
-	position: relative;
-
-	.sixty, .fourty {
-		text-align: center;
-	}
-
-	.half.separator {
-		text-align: center;
-		@include respond-to( 768px ) {
-			width: 46.5%;
-		}
-	}
-
-	.half.phone-number {
-		padding: 20px 0;
-
-		@include respond-to( 768px ) {
-			padding: 40px 0;
-		}
-	}
-
-	.phone {
-		position: absolute;
-		bottom: 0;
-		left: 0;
-		display: none;
-
-		@include respond-to( 768px ) {
-			display: block;
-		}
-	}
-
+footer {
 	@include respond-to( 768px ) {
-		padding: 20px 20px 20px 250px;
+		position: relative;
+		margin-top: 40px;
+
+		&:before {
+			content: " ";
+			position: absolute;
+			top: -70px;
+			left: 50%;
+			width: 120%;
+			height: 70px;
+			margin-left: -60%;
+			background: url(../img/footer-border.png) center center repeat-x;
+			-ms-transform: rotate( 2deg );
+			-webkit-transform: rotate( 2deg );
+			transform: rotate( 2deg );
+		}
 	}
 
-	@include respond-to( 1220px ) {
-		padding: 20px 20px 20px 120px;
+	.half {
+		text-align: center;
+	}
+
+	h2 {
+		font-size: 40px;
+
+		@include respond-to( 768px) {
+			line-height: 140px;
+			text-align: left;
+		}
 	}
 }
+
 
 
 .fine-print {
@@ -222,5 +234,10 @@ header {
 	line-height: 1.2em;
 	text-align: left;
 	padding: 10px;
+
+	img {
+		float: right;
+		margin: 0 0 10px 10px;
+	}
 }
 

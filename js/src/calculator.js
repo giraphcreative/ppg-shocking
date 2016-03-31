@@ -26,6 +26,8 @@ $(function(){
 
 		$(".results").slideDown( "slow" );
 		$(".tool").slideUp( "slow" );
+
+		ga('send', 'event', 'Calculate', 'click', 'Calculate');
 	};
 
 
